@@ -1,20 +1,21 @@
 {
   "name": "expense-tracker",
   "version": "1.0.0",
-  "description": "แอปรายรับรายจ่ายที่เชื่อมต่อกับ Google Sheets",
+  "description": "Expense Tracker App",
   "main": "index.js",
   "scripts": {
     "start": "netlify dev",
-    "build": "netlify build"
+    "build": "netlify-lambda build netlify/functions"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "googleapis": "^118.0.0"
+    "googleapis": "^109.0.0"
   },
   "devDependencies": {
-    "netlify-cli": "^19.0.2"
+    "netlify-cli": "^12.0.11",
+    "netlify-lambda": "^2.0.15"
   }
 }
