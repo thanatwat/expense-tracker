@@ -21,10 +21,10 @@ exports.handler = async function(event, context) {
         body: JSON.stringify({ success: false, message: 'Method Not Allowed' })
       };
     }
-    
+
     // รับข้อมูลจาก request body
     const data = JSON.parse(event.body);
-    
+
     // ตรวจสอบข้อมูลที่จำเป็น
     if (!data.date || !data.type || !data.category || !data.amount) {
       return {
@@ -35,7 +35,7 @@ exports.handler = async function(event, context) {
         })
       };
     }
-    
+
     // เตรียมข้อมูลสำหรับบันทึก
     const values = [
       [
@@ -46,7 +46,7 @@ exports.handler = async function(event, context) {
         data.description || ''
       ]
     ];
-    
+
     // บันทึกข้อมูลลงใน Google Sheets
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
@@ -57,7 +57,7 @@ exports.handler = async function(event, context) {
         values: values
       }
     });
-    
+
     return {
       statusCode: 200,
       body: JSON.stringify({
@@ -65,10 +65,10 @@ exports.handler = async function(event, context) {
         message: 'บันทึกข้อมูลสำเร็จ'
       })
     };
-    
+
   } catch (error) {
     console.error('Error adding transaction:', error);
-    
+
     return {
       statusCode: 500,
       body: JSON.stringify({

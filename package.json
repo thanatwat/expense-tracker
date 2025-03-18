@@ -15,7 +15,7 @@
     "googleapis": "^109.0.0"
   },
   "devDependencies": {
-    "netlify-cli": "^12.0.11",
-    "netlify-lambda": "^2.0.15"
+    "netlify-cli": "^19.0.2",
+    "netlify-lambda": "^0.4.0"
   }
 }

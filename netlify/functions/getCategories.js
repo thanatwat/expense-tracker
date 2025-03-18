@@ -53,8 +53,13 @@ exports.handler = async function(event, context) {
     console.log('GOOGLE_PRIVATE_KEY:', process.env.GOOGLE_PRIVATE_KEY ? 'Set ✓' : 'Not set ✗');
     console.log('SPREADSHEET_ID:', process.env.SPREADSHEET_ID ? 'Set ✓' : 'Not set ✗');
 
-    // Fix for Netlify's environment variable escaping issues
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+    // ใช้ Base64 Private Key
+    let privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    if (process.env.GOOGLE_PRIVATE_KEY_BASE64) {
+      privateKey = Buffer.from(process.env.GOOGLE_PRIVATE_KEY_BASE64, 'base64').toString();
+    } else {
+      privateKey = privateKey.replace(/\\n/g, '\n');
+    }
     
     // ตั้งค่า Google Sheets API
     const auth = new google.auth.JWT(
@@ -108,14 +113,13 @@ exports.handler = async function(event, context) {
     };
     
   } catch (error) {
-    console.error('Error in getCategories function:', error);
-    
+    console.error('Error details:', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         success: false,
-        message: `Error: ${error.message}`
+        message: `เกิดข้อผิดพลาดในการดึงข้อมูลหมวดหมู่: ${error.message}`
       })
     };
   }
